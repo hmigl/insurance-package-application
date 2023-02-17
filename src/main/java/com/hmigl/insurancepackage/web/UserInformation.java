@@ -11,8 +11,13 @@ public record UserInformation(
     @Valid House house,
     @NotNull @PositiveOrZero Integer income,
     @NotBlank @Pattern(regexp = "married|single") String maritalStatus,
-    @Size(min = 3, max = 3) List<Boolean> riskQuestions,
+    @Size(min = 3, max = 3) List<Integer> riskQuestions,
     @Valid Vehicle vehicle) {
+
+  public UserInformation {
+    for (int e : riskQuestions)
+      if (e != 0 && e != 1) throw new IllegalArgumentException("answers must be either 0 or 1");
+  }
 
   protected record House(@Pattern(regexp = "owned|mortgaged") String ownershipStatus) {}
 
