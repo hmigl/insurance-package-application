@@ -2,6 +2,8 @@ package com.hmigl.insurancepackage.domain;
 
 import com.hmigl.insurancepackage.web.UserInformation;
 
+import java.time.Year;
+
 public enum Score {
   AUTO {
     private String score;
@@ -11,8 +13,7 @@ public enum Score {
       baseScore -= AUTO.deductRiskPointBasedOnAge(userInformation.age());
       baseScore -= AUTO.deductRiskPointBasedOnIncome(userInformation.income());
       if (userInformation.vehicle() != null
-          && userInformation.vehicle().year() >= userInformation.vehicle().year() - 5)
-        baseScore += 1;
+          && userInformation.vehicle().year() >= Year.now().getValue() - 5) baseScore += 1;
 
       score = AUTO.getScore(baseScore);
       if (userInformation.vehicle() == null) score = "ineligible";
