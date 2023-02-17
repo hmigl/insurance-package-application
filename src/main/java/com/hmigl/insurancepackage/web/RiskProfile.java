@@ -1,14 +1,16 @@
 package com.hmigl.insurancepackage.web;
 
-import jakarta.validation.constraints.NotBlank;
+import com.hmigl.insurancepackage.domain.Score;
 
-public record RiskProfile(
-    @NotBlank String auto,
-    @NotBlank String disability,
-    @NotBlank String home,
-    @NotBlank String life) {
+public record RiskProfile(String auto, String disability, String home, String life) {
 
   public static RiskProfile fromUserInformation(UserInformation userInformation) {
-    return null;
+    int baseScore = userInformation.baseScore();
+
+    return new RiskProfile(
+        Score.AUTO.calculateScore(userInformation, baseScore),
+        Score.DISABILITY.calculateScore(userInformation, baseScore),
+        Score.HOME.calculateScore(userInformation, baseScore),
+        Score.LIFE.calculateScore(userInformation, baseScore));
   }
 }
