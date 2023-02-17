@@ -32,10 +32,10 @@ public enum Score {
 
       baseScore -= DISABILITY.deductRiskPointBasedOnIncome(userInformation.income());
 
+      baseScore += DISABILITY.addRiskPointBasedOnDependents(userInformation.dependents());
+
       if (userInformation.house() != null
           && userInformation.house().ownershipStatus().equals("mortgaged")) baseScore += 1;
-
-      if (userInformation.dependents() > 0) baseScore += 1;
 
       if (userInformation.maritalStatus().equals("married")) baseScore -= 1;
 
@@ -74,7 +74,7 @@ public enum Score {
 
       baseScore -= LIFE.deductRiskPointBasedOnIncome(userInformation.income());
 
-      if (userInformation.dependents() > 0) baseScore += 1;
+      baseScore += LIFE.addRiskPointBasedOnDependents(userInformation.dependents());
 
       if (userInformation.maritalStatus().equals("married")) baseScore += 1;
 
@@ -102,6 +102,11 @@ public enum Score {
 
   private int deductRiskPointBasedOnIncome(int income) {
     if (income > 200_000) return 1;
+    return 0;
+  }
+
+  private int addRiskPointBasedOnDependents(int dependents) {
+    if (dependents > 0) return 1;
     return 0;
   }
 }
