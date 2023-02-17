@@ -7,4 +7,8 @@ public record RiskProfile(
     @NotBlank String disability,
     @NotBlank String home,
     @NotBlank String life) {
+
+  public static RiskProfile fromUserInformation(UserInformation userInformation) {
+    return null;
+  }
 }
