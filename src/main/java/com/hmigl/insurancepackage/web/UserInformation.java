@@ -19,7 +19,11 @@ public record UserInformation(
       if (e != 0 && e != 1) throw new IllegalArgumentException("answers must be either 0 or 1");
   }
 
-  protected record House(@Pattern(regexp = "owned|mortgaged") String ownershipStatus) {}
+  public record House(@Pattern(regexp = "owned|mortgaged") String ownershipStatus) {}
 
-  protected record Vehicle(@Positive Integer year) {}
+  public record Vehicle(@Positive Integer year) {}
+
+  public int baseScore() {
+    return riskQuestions.stream().mapToInt(Integer::intValue).sum();
+  }
 }
