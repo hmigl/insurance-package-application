@@ -9,7 +9,6 @@ public enum Score {
       String score;
 
       baseScore -= AUTO.deductRiskPointBasedOnAge(userInformation.age());
-
       baseScore -= AUTO.deductRiskPointBasedOnIncome(userInformation.income());
 
       if (userInformation.vehicle() != null
@@ -29,15 +28,12 @@ public enum Score {
       String score;
 
       baseScore -= DISABILITY.deductRiskPointBasedOnAge(userInformation.age());
-
       baseScore -= DISABILITY.deductRiskPointBasedOnIncome(userInformation.income());
-
       baseScore += DISABILITY.addRiskPointBasedOnDependents(userInformation.dependents());
+      baseScore -= DISABILITY.addOrDeductRiskPointBasedOnMaritalStatus(userInformation.maritalStatus());
 
       if (userInformation.house() != null
           && userInformation.house().ownershipStatus().equals("mortgaged")) baseScore += 1;
-
-      if (userInformation.maritalStatus().equals("married")) baseScore -= 1;
 
       score = DISABILITY.getScore(baseScore);
 
@@ -52,7 +48,6 @@ public enum Score {
       String score;
 
       baseScore -= HOME.deductRiskPointBasedOnAge(userInformation.age());
-
       baseScore -= HOME.deductRiskPointBasedOnIncome(userInformation.income());
 
       if (userInformation.house() != null
@@ -71,12 +66,9 @@ public enum Score {
       String score;
 
       baseScore -= LIFE.deductRiskPointBasedOnAge(userInformation.age());
-
       baseScore -= LIFE.deductRiskPointBasedOnIncome(userInformation.income());
-
       baseScore += LIFE.addRiskPointBasedOnDependents(userInformation.dependents());
-
-      if (userInformation.maritalStatus().equals("married")) baseScore += 1;
+      baseScore += LIFE.addOrDeductRiskPointBasedOnMaritalStatus(userInformation.maritalStatus());
 
       score = LIFE.getScore(baseScore);
 
@@ -107,6 +99,11 @@ public enum Score {
 
   private int addRiskPointBasedOnDependents(int dependents) {
     if (dependents > 0) return 1;
+    return 0;
+  }
+
+  private int addOrDeductRiskPointBasedOnMaritalStatus(String maritalStatus) {
+    if (maritalStatus.equals("married")) return 1;
     return 0;
   }
 }
