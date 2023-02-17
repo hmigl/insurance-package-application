@@ -33,7 +33,7 @@ public enum Score {
           && userInformation.house().ownershipStatus().equals("mortgaged")) baseScore += 1;
 
       score = DISABILITY.getScore(baseScore);
-      if (userInformation.income() == 0 || userInformation.age() >= 60) score = "ineligible";
+      if (userInformation.income() == 0 || userInformation.age() > 60) score = "ineligible";
 
       return score;
     }
@@ -65,7 +65,7 @@ public enum Score {
       baseScore += LIFE.addOrDeductRiskPointBasedOnMaritalStatus(userInformation.maritalStatus());
 
       score = LIFE.getScore(baseScore);
-      if (userInformation.age() >= 60) score = "ineligible";
+      if (userInformation.age() > 60) score = "ineligible";
 
       return score;
     }
