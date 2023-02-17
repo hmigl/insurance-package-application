@@ -10,7 +10,7 @@ public enum Score {
 
       baseScore -= AUTO.deductRiskPointBasedOnAge(userInformation.age());
 
-      if (userInformation.income() >= 200_000) baseScore -= 1;
+      baseScore -= AUTO.deductRiskPointBasedOnIncome(userInformation.income());
 
       if (userInformation.vehicle() != null
           && userInformation.vehicle().year() >= userInformation.vehicle().year() - 5)
@@ -30,7 +30,7 @@ public enum Score {
 
       baseScore -= DISABILITY.deductRiskPointBasedOnAge(userInformation.age());
 
-      if (userInformation.income() >= 200_000) baseScore -= 1;
+      baseScore -= DISABILITY.deductRiskPointBasedOnIncome(userInformation.income());
 
       if (userInformation.house() != null
           && userInformation.house().ownershipStatus().equals("mortgaged")) baseScore += 1;
@@ -53,7 +53,7 @@ public enum Score {
 
       baseScore -= HOME.deductRiskPointBasedOnAge(userInformation.age());
 
-      if (userInformation.income() >= 200_000) baseScore -= 1;
+      baseScore -= HOME.deductRiskPointBasedOnIncome(userInformation.income());
 
       if (userInformation.house() != null
           && userInformation.house().ownershipStatus().equals("mortgaged")) baseScore += 1;
@@ -72,7 +72,7 @@ public enum Score {
 
       baseScore -= LIFE.deductRiskPointBasedOnAge(userInformation.age());
 
-      if (userInformation.income() >= 200_000) baseScore -= 1;
+      baseScore -= LIFE.deductRiskPointBasedOnIncome(userInformation.income());
 
       if (userInformation.dependents() > 0) baseScore += 1;
 
@@ -97,6 +97,11 @@ public enum Score {
   private int deductRiskPointBasedOnAge(int age) {
     if (age < 30) return 2;
     if (age <= 40) return 1;
+    return 0;
+  }
+
+  private int deductRiskPointBasedOnIncome(int income) {
+    if (income > 200_000) return 1;
     return 0;
   }
 }
