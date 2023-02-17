@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/insurance-packages")
 public class InsurancePackageController {
   @PostMapping
-  public ResponseEntity<?> processInsuranceNeeds(@RequestBody @Valid UserInformation userInformation) {
-    return ResponseEntity.ok(userInformation.toString());
+  public ResponseEntity<RiskProfile> calculateRiskProfile(
+      @RequestBody @Valid UserInformation userInformation) {
+    return ResponseEntity.ok(RiskProfile.fromUserInformation(userInformation));
   }
 }
