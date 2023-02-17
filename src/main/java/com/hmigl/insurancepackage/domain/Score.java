@@ -8,8 +8,7 @@ public enum Score {
     public String calculateScore(UserInformation userInformation, int baseScore) {
       String score;
 
-      if (userInformation.age() < 30) baseScore -= 2;
-      if (userInformation.age() >= 30 && userInformation.age() <= 40) baseScore -= 1;
+      baseScore -= AUTO.deductRiskPointBasedOnAge(userInformation.age());
 
       if (userInformation.income() >= 200_000) baseScore -= 1;
 
@@ -29,8 +28,7 @@ public enum Score {
     public String calculateScore(UserInformation userInformation, int baseScore) {
       String score;
 
-      if (userInformation.age() < 30) baseScore -= 2;
-      if (userInformation.age() >= 30 && userInformation.age() <= 40) baseScore -= 1;
+      baseScore -= DISABILITY.deductRiskPointBasedOnAge(userInformation.age());
 
       if (userInformation.income() >= 200_000) baseScore -= 1;
 
@@ -53,8 +51,7 @@ public enum Score {
     public String calculateScore(UserInformation userInformation, int baseScore) {
       String score;
 
-      if (userInformation.age() < 30) baseScore -= 2;
-      if (userInformation.age() >= 30 && userInformation.age() <= 40) baseScore -= 1;
+      baseScore -= HOME.deductRiskPointBasedOnAge(userInformation.age());
 
       if (userInformation.income() >= 200_000) baseScore -= 1;
 
@@ -73,8 +70,7 @@ public enum Score {
     public String calculateScore(UserInformation userInformation, int baseScore) {
       String score;
 
-      if (userInformation.age() < 30) baseScore -= 2;
-      if (userInformation.age() >= 30 && userInformation.age() <= 40) baseScore -= 1;
+      baseScore -= LIFE.deductRiskPointBasedOnAge(userInformation.age());
 
       if (userInformation.income() >= 200_000) baseScore -= 1;
 
@@ -96,5 +92,11 @@ public enum Score {
     if (baseScore <= 0) return "economic";
     if (baseScore <= 2) return "regular";
     return "responsible";
+  }
+
+  private int deductRiskPointBasedOnAge(int age) {
+    if (age < 30) return 2;
+    if (age <= 40) return 1;
+    return 0;
   }
 }
