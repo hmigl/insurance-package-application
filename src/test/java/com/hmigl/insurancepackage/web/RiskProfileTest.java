@@ -45,4 +45,21 @@ class RiskProfileTest {
 
     assertEquals(riskProfile, RiskProfile.fromUserInformation(userInformation));
   }
+
+  @Test
+  @DisplayName("Over 60 years old should be ineligible for disability and life insurance")
+  void shouldBeIneligibleForDisabilityAndLifeInsurance() {
+    var userInformation =
+        new UserInformation(
+            65,
+            2,
+            new UserInformation.House("owned"),
+            20_000,
+            "married",
+            List.of(1, 1, 0),
+            new UserInformation.Vehicle(2018));
+    var riskProfile = new RiskProfile("responsible", "ineligible", "regular", "ineligible");
+
+    assertEquals(riskProfile, RiskProfile.fromUserInformation(userInformation));
+  }
 }
