@@ -1,0 +1,2 @@
+Just a simple API endpoint that receives an user's information and returns his risk profile.
+The challenge can be found at <https://github.com/OriginFinancial/origin-backend-take-home-assignment/blob/master/README.md>
